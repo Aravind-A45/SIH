@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DDAS</title>
+  <style>
+    * {
+      margin: 0;
+    }
+
+    .navbar {
+      background-color: rgb(77, 67, 155);
+    }
+
+    .navbar nav {
+      display: flex;
+    }
+
+    .navbar nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar nav ul li {
+      margin-right: 20px;
+    }
+
+    .navbar nav ul li a {
+      text-decoration: none;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <nav>
+      <ul>
+        <li><img src="{% static 'img/logo.avif' %}" style="width: 20%;margin-top:1%;"></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        {% if user.is_authenticated %}
+        <li style="color: beige; font-size: medium;">Hello, {{ user.username }}</li>
+        <li><a href="{% url 'logout' %}" onclick="noBack()">Logout</a></li>
+        {% if is_admin %}
+            <li><a href="{% url 'upload_file' %}">ADMIN</a></li>
+        {% endif %}
+        {% else %}
+        <li><a href="{% url 'signup' %}"><i class="fa fa-fw fa-user"></i>Signup</a></li> 
+        <li><a href="{% url 'login' %}"><i class="fa fa-fw fa-user"></i>Login</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <div id="content" style="padding-top: 30px;"></div>
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
